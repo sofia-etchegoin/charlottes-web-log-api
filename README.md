@@ -290,7 +290,7 @@ The database migrations and seeds have already been written for you so you don't
 
     `npm run dev:all`
 
-    Visit [http://localhost:3000](http://localhost:3000) and see Charlotte's Web Log in action. You may find that there are a couple things that didn't turn out as you expected, or everything might be perfect!
+    Visit [http://localhost:5173](http://localhost:5173) and see Charlotte's Web Log in action. You may find that there are a couple things that didn't turn out as you expected, or everything might be perfect!
   </details>
 
 - [ ] Troubleshoot any outstanding issues you detect in the browser
