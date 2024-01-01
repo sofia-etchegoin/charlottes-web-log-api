@@ -1,6 +1,8 @@
 import connection from './connection.ts'
 import { Post, PostData, PostUpdate } from '../../models/post.ts'
 
+// -- POSTS -- //
+
 //GET all posts
 export async function getAllPostsDb(): Promise<Post> {
   try {
@@ -70,6 +72,22 @@ export async function deletePostDb(postId: number) {
     return deletedPostCount
   } catch (error: any) {
     console.error(`Error in deletePostDb: ${error.message}`)
+    throw error
+  }
+}
+
+// -- COMMENTS -- //
+
+//GET all comments for a specific post
+
+export async function getAllCommentsDb(postId: number) {
+  try {
+    const comments = await connection('comments')
+      .select('id', 'post_id as postId', 'date_posted as datePosted', 'comment')
+      .where({ post_id: postId })
+    return comments
+  } catch (error: any) {
+    console.error(`Error in getAllCommentsDb: ${error.message}`)
     throw error
   }
 }

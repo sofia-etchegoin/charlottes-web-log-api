@@ -64,3 +64,18 @@ router.delete('/:id', async (req, res) => {
     res.json({ error: 'Internal Server Error' })
   }
 })
+
+// -- COMMENTS -- //
+
+//GET comments '/api/v1/posts/:postId/comments'
+
+router.get('/:postId/comments', async (req, res) => {
+  const postId = Number(req.params.postId)
+  try {
+    const comments = await db.getAllCommentsDb(postId)
+    res.json(comments)
+  } catch (error: any) {
+    console.error(`Error in getting all comments in server`)
+    res.json({ error: 'Internal Server Error' })
+  }
+})
