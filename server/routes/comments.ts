@@ -23,3 +23,15 @@ router.patch('/:commentId', async (req, res) => {
     res.json({ error: 'Internal Server Error' })
   }
 })
+
+//DELETE '/v1/comments/:commentId'
+router.delete('/:commentId', async (req, res) => {
+  const commentId = Number(req.params.commentId)
+  try {
+    const deletedComment = await db.deleteCommentDb(commentId)
+    res.json(deletedComment)
+  } catch (error: any) {
+    console.error(`Error in deleting comment in server: ${error.message}`)
+    throw error
+  }
+})

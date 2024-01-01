@@ -139,3 +139,16 @@ export async function updateCommentDb(
     throw error
   }
 }
+
+//DELETE an existing comment
+export async function deleteCommentDb(commentId: number) {
+  try {
+    const deletedComment = await connection('comments')
+      .where({ id: commentId })
+      .del()
+    return deletedComment
+  } catch (error: any) {
+    console.error(`Error in deleteCommentDb: ${error.message}`)
+    throw error
+  }
+}
