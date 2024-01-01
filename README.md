@@ -2,13 +2,11 @@
 
 This is an exercise designed to practise building an API for a blog about Charlotte's Web.
 
-Learning objectives:
+Objectives:
 
 1. refresh database querying skills
 1. practice exposing an API for client side consumption
 1. use Insomnia to test an API
-
-The front-end isn't required for the purposes of this exercise.
 
 ![Charlotte's Web logo](charlottes-web.png)
 
@@ -41,13 +39,11 @@ The front-end isn't required for the purposes of this exercise.
 - Wrote the database migrations and seeds.
 - Wrote the database functions in `server/db/db.ts`.
 - Wrote API functions in `server/routes/posts.ts` and `server/routes/comments.ts`.
-- Uses Insomnia to verify the API behaves according to the specification described.
+- Used Insomnia to verify the API behaves according to the specification described.
 - Implemented the database and API routes one at a time (i.e. wrote the database query first, and then wrote the corresponding API route before moving on to the next database query).
 
 <details>
   <summary>Overview of all routes</summary>
-
-Here is a table of routes implemented as part of this exercise:
 
 | METHOD | ENDPOINT                     | USAGE                                      | RETURNS                     |
 | ------ | ---------------------------- | ------------------------------------------ | --------------------------- |

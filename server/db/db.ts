@@ -1,5 +1,5 @@
 import connection from './connection.ts'
-import { Post, PostData } from '../../models/post.ts'
+import { Post, PostData, PostUpdate } from '../../models/post.ts'
 
 //GET all posts
 export async function getAllPostsDb(): Promise<Post> {
@@ -30,7 +30,26 @@ export async function addPostDb(post: PostData) {
 
     return addedPost
   } catch (error: any) {
-    console.error('Error in addPostDb:', error.message)
+    console.error(`Error in addPostDb: , ${error.message}`)
     return error
+  }
+}
+
+//UPDATE a post
+export async function updatePostDb(postId: number, updatedPostData: any) {
+  try {
+    const [updatedPost] = await connection('posts')
+      .update({
+        title: updatedPostData.title,
+        text: updatedPostData.text,
+        date_created: new Date(),
+      })
+      .where({ id: postId })
+      .returning(['id', 'title', 'date_created as dateCreated', 'text'])
+
+    return updatedPost
+  } catch (error: any) {
+    console.error(`Error in updatePostDb: ${error.message}`)
+    throw error
   }
 }

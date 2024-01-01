@@ -27,3 +27,22 @@ router.post('/', async (req, res) => {
     return error
   }
 })
+
+//PATCH '/api/v1/posts/:id'
+router.patch('/:id', async (req, res) => {
+  const postId = Number(req.params.id)
+  const updatedPostData = req.body
+
+  try {
+    const updatedPost = await db.updatePostDb(postId, updatedPostData)
+
+    if (updatedPost) {
+      res.json(updatedPost)
+    } else {
+      res.json({ error: 'Post not found' })
+    }
+  } catch (error: any) {
+    console.error(`Error updating post from server: ${error.message}`)
+    res.json({ error: 'Internal Server Error' })
+  }
+})
