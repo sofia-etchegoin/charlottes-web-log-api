@@ -5,7 +5,7 @@ const router = express.Router()
 
 export default router
 
-// GET '/api/v1/posts'
+// GET '/v1/posts'
 router.get('/', async (req, res) => {
   try {
     const posts = await db.getAllPostsDb()
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-//POST '/api/v1/posts'
+//POST '/v1/posts'
 router.post('/', async (req, res) => {
   const post = req.body
   try {
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-//PATCH '/api/v1/posts/:id'
+//PATCH '/v1/posts/:id'
 router.patch('/:id', async (req, res) => {
   const postId = Number(req.params.id)
   const updatedPostData = req.body
@@ -47,7 +47,7 @@ router.patch('/:id', async (req, res) => {
   }
 })
 
-//DELETE 'api/v1/posts/:id'
+//DELETE '/v1/posts/:id'
 router.delete('/:id', async (req, res) => {
   const postId = Number(req.params.id)
 
@@ -67,7 +67,7 @@ router.delete('/:id', async (req, res) => {
 
 // -- COMMENTS -- //
 
-//GET comments '/api/v1/posts/:postId/comments'
+//GET comments for a specific post '/v1/posts/:postId/comments'
 
 router.get('/:postId/comments', async (req, res) => {
   const postId = Number(req.params.postId)
@@ -76,6 +76,20 @@ router.get('/:postId/comments', async (req, res) => {
     res.json(comments)
   } catch (error: any) {
     console.error(`Error in getting all comments in server`)
+    res.json({ error: 'Internal Server Error' })
+  }
+})
+
+//POST comment for a specific post '/v1/posts/:postId/comments'
+router.post('/:postId/comments', async (req, res) => {
+  const postId = Number(req.params.postId)
+  const { comment } = req.body
+
+  try {
+    const addedComment = await db.addCommentDb(postId, comment)
+    res.json(addedComment)
+  } catch (error: any) {
+    console.error(`Error in adding comment in server`)
     res.json({ error: 'Internal Server Error' })
   }
 })

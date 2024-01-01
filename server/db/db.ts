@@ -91,3 +91,51 @@ export async function getAllCommentsDb(postId: number) {
     throw error
   }
 }
+
+//ADD a comment to a specific post
+
+export async function addCommentDb(postId: number, comment: string) {
+  try {
+    const [addedComment] = await connection('comments')
+      .insert({
+        post_id: postId,
+        comment: comment,
+        date_posted: new Date(),
+      })
+      .returning([
+        'id',
+        'post_id as postId',
+        'date_posted as datePosted',
+        'comment',
+      ])
+    return addedComment
+  } catch (error: any) {
+    console.error(`Error in addCommentToPostDb: ${error.message}`)
+    throw error
+  }
+}
+
+//UPDATE an existing comment
+export async function updateCommentDb(
+  commentId: number,
+  updatedComment: string
+) {
+  try {
+    const [updatedCommentData] = await connection('comments')
+      .where({ id: commentId })
+      .update({
+        comment: updatedComment,
+        date_posted: new Date(),
+      })
+      .returning(
+        'id',
+        'post_id as postId',
+        'date_posted as datePosted',
+        'comment'
+      )
+    return updatedCommentData
+  } catch (error: any) {
+    console.error(`Error in updateCommentDb: ${error.message}`)
+    throw error
+  }
+}

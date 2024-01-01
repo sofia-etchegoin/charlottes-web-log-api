@@ -7,15 +7,19 @@ const router = express.Router()
 
 export default router
 
-//GET comments '/api/v1/posts/${postId}/comments'
-
-router.get('/posts/:postId/comments', async (req, res) => {
-  const postId = Number(req.params)
+//PATCH '/v1/comments/:commentId'
+router.patch('/:commentId', async (req, res) => {
+  const commentId = Number(req.params.commentId)
+  const { comment } = req.body
   try {
-    const comments = await db.getAllCommentsDb(postId)
-    res.json(comments)
+    const updatedComment = await db.updateCommentDb(commentId, comment)
+    if (updatedComment) {
+      res.json(updatedComment)
+    } else {
+      res.json({ error: 'Comment not found' })
+    }
   } catch (error: any) {
-    console.error(`Error in getting all comments in server`)
+    console.error(`Error updating comment in server: ${error.message}`)
     res.json({ error: 'Internal Server Error' })
   }
 })

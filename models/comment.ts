@@ -2,7 +2,7 @@ export interface Comment {
   id: number
   comment: string
   postId: number
-  dateCreated: number
+  dateCreated: string
 }
 
 export interface CommentData {
