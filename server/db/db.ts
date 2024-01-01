@@ -13,7 +13,7 @@ export async function getAllPostsDb(): Promise<Post> {
     return posts
   } catch (error: any) {
     console.error(`Error in getAllPostsDb: ${error.message}`)
-    return error
+    throw error
   }
 }
 
@@ -31,7 +31,7 @@ export async function addPostDb(post: PostData) {
     return addedPost
   } catch (error: any) {
     console.error(`Error in addPostDb: , ${error.message}`)
-    return error
+    throw error
   }
 }
 
@@ -50,6 +50,26 @@ export async function updatePostDb(postId: number, updatedPostData: any) {
     return updatedPost
   } catch (error: any) {
     console.error(`Error in updatePostDb: ${error.message}`)
+    throw error
+  }
+}
+
+//DELETE a post
+export async function deletePostDb(postId: number) {
+  try {
+    // Delete the post and return the number of affected rows
+    const deletedPostCount = await connection('posts')
+      .where({ id: postId })
+      .del()
+
+    if (deletedPostCount > 0) {
+      // If the post was deleted, delete associated comments
+      await connection('comments').where({ post_id: postId }).del()
+    }
+
+    return deletedPostCount
+  } catch (error: any) {
+    console.error(`Error in deletePostDb: ${error.message}`)
     throw error
   }
 }

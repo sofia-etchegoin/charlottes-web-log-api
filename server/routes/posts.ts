@@ -46,3 +46,21 @@ router.patch('/:id', async (req, res) => {
     res.json({ error: 'Internal Server Error' })
   }
 })
+
+//DELETE 'api/v1/posts/:id'
+router.delete('/:id', async (req, res) => {
+  const postId = Number(req.params.id)
+
+  try {
+    const deletedPostCount = await db.deletePostDb(postId)
+
+    if (deletedPostCount > 0) {
+      res.status(200).send() // Send a 200 response if the post was deleted
+    } else {
+      res.json({ error: 'Post not found' })
+    }
+  } catch (error: any) {
+    console.error(`Error deleting post from server: ${error.message}`)
+    res.json({ error: 'Internal Server Error' })
+  }
+})
